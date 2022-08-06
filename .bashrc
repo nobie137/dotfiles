@@ -8,20 +8,23 @@ usage() { #Taken from TFL's github.
 		$d; s/^([.0-9]+[KMGTPEZY]\t)\.\//\1/
 	' | sort -hr | column
 }
-cleanse(){#Do not allow the glowing ones to know.
+cleanse(){ #Do not allow the glowing ones to know.
     history -c
     echo "" > "$HOME/.bash_history"
     echo "" > "$HOME/.python_history"
-    rm -rf $HOME/.cache/vim/backup/*
+    rm -rf $HOME/.config/discord/Cache/*_0\
+        $HOME/.config/discord/Cache/*_s\
+        $HOME/.config/discord/.org.chromium.Chromium.*\
+        $HOME/.cache/vim/backup/*
 }
-trash(){#Use when in doubt.
+trash(){ #Use when in doubt.
     dir="$HOME/.trash"
     [[ ! $1 ]] && echo "Trash command for trashing files." ||{
         [[ ! -d $dir ]] && mkdir $dir
         [[ $1 == "clean" ]] && rm -rf $dir/* || mv $1 $dir
     }
 }
-ffcord(){#Opening OBS takes too much effort
+ffcord(){ #Opening OBS takes too much effort
      ffmpeg -video_size 1920x1080 -framerate 40 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i 2 "$HOME/Videos/screenRecordings/$(date +"%Y-%m-%d %H:%M:%S").mp4"
 }
 lsample(){ #EASY FUCKING SAMPLING BABY
@@ -200,3 +203,4 @@ export LESS="--RAW-CONTROL-CHARS"
 
 #neofetch; cat ~/.todo | lolcat
 #festival --tts ~/txt/welcome_message
+rm -rf *_s
