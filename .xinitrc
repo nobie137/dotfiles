@@ -5,4 +5,4 @@ ntpd -qg
 hwclock -w
 xset r rate 280 40
 wait $wmpid
-aplay -f CD /etc/login.wav &
+mpv --no-video /etc/login.wav &
