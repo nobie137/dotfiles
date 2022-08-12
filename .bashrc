@@ -12,10 +12,12 @@ cleanse(){ #Do not allow the glowing ones to know.
     history -c
     echo "" > "$HOME/.bash_history"
     echo "" > "$HOME/.python_history"
+    echo "" > "$HOME/.config/BetterDiscord/plugins/MessageLoggerV2Data.json"
     rm -rf $HOME/.config/discord/Cache/*_0\
         $HOME/.config/discord/Cache/*_s\
         $HOME/.config/discord/.org.chromium.Chromium.*\
-        $HOME/.cache/vim/backup/*
+        $HOME/.cache/vim/backup/*\
+        $HOME/.config/BetterDiscord/plugins/MLV2_IMAGE_CACHE/*
 }
 trash(){ #Use when in doubt.
     dir="$HOME/.trash"
@@ -110,35 +112,6 @@ match_lhs=""
 	&& match_lhs=$(dircolors --print-database)
 [[ $'\n'${match_lhs} == *$'\n'"TERM "${safe_term}* ]] && use_color=true
 
-if ${use_color} ; then
-	# Enable colors for ls, etc.  Prefer ~/.dir_colors #64489
-	if type -P dircolors >/dev/null ; then
-		if [[ -f ~/.dir_colors ]] ; then
-			eval $(dircolors -b ~/.dir_colors)
-		elif [[ -f /etc/DIR_COLORS ]] ; then
-			eval $(dircolors -b /etc/DIR_COLORS)
-		fi
-	fi
-
-	if [[ ${EUID} == 0 ]] ; then
-		PS1='\[\033[01;31m\][\h\[\033[01;36m\] \W\[\033[01;31m\]]\$\[\033[00m\] '
-	else
-		PS1='\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\$\[\033[00m\] '
-	fi
-
-	alias ls='ls --color=auto'
-	alias grep='grep --colour=auto'
-	alias egrep='egrep --colour=auto'
-	alias fgrep='fgrep --colour=auto'
-else
-	if [[ ${EUID} == 0 ]] ; then
-		# show root@ when we don't have colors
-		PS1='\u@\h \W \$ '
-	else
-		PS1='\u@\h \w \$ '
-	fi
-fi
-
 unset use_color safe_term match_lhs sh
 
 
@@ -172,13 +145,12 @@ alias cls="clear"
 alias ls="ls -a --color"
 alias lsl="ls -ahl --color"
 alias strlen="expr length $1"
-alias paci="sudo pacman -S"
-alias pacr="sudo pacman -R"
-alias pacupd="sudo pacman -Syu"
+alias xr="sudo xbps-remove"
+alias xu="sudo xbps-install -Syu"
+alias xq="xbps-query -Rs"
 alias cp="cp -i"
 alias df="df -h"
 alias free="free -h"
-alias zcode="zbarimg $1 > /tmp/qrCodeData; cat /tmp/qrCodeData"
 alias scrot="scrot ~/Pictures/Scrot/Screenshot.jpeg"
 alias wttr="curl wttr.in/"
 alias ms-dlp="yt-dlp -x --audio-quality 10"
@@ -187,6 +159,7 @@ alias grabc="grabc -rgb"
 alias hexedit="hexedit --color"
 alias todo="cat ~/.todo"
 alias hear="mpv $1 --no-video"
+alias nn="firejail --net=none"
 alias a="cat $HOME/txt/Anime"
 alias ae="vim $HOME/txt/Anime"
 alias m="cat $HOME/txt/Manga"
@@ -203,4 +176,3 @@ export LESS="--RAW-CONTROL-CHARS"
 
 #neofetch; cat ~/.todo | lolcat
 #festival --tts ~/txt/welcome_message
-rm -rf *_s
