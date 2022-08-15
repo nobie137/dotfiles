@@ -19,6 +19,17 @@ cleanse(){ #Do not allow the glowing ones to know.
         $HOME/.cache/vim/backup/*\
         $HOME/.config/BetterDiscord/plugins/MLV2_IMAGE_CACHE/*
 }
+own(){ #External drive makes everything read only and owned by root, so we reown dat shit!
+    [[ $2 == "\*" ]] && {
+    sudo chmod $1 *
+    sudo chown $USER *
+    sudo chgrp $USER *
+}||{
+    sudo chmod $1 $2
+    sudo chown $USER $2
+    sudo chgrp $USER $2
+}
+}
 trash(){ #Use when in doubt.
     dir="$HOME/.trash"
     [[ ! $1 ]] && echo "Trash command for trashing files." ||{
@@ -121,6 +132,8 @@ complete -cf sudo
 shopt -s checkwinsize interactive_comments expand_aliases histappend
 set -o vi
 
+export PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:$HOME/.local/bin
+export XDG_RUNTIME_DIR=/tmp/runtime-nobie
 #Global colors
 
 export Black="\033[1;30m"
