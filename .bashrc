@@ -16,14 +16,16 @@ cleanse(){ #Do not allow the glowing ones to know.
     rm -rf $HOME/.config/discord/Cache/*_0\
         $HOME/.config/discord/Cache/*_s\
         $HOME/.config/discord/.org.chromium.Chromium.*\
+        $HOME/.config/BetterDiscord/plugins/MLV2_IMAGE_CACHE/*\
         $HOME/.cache/vim/backup/*\
-        $HOME/.config/BetterDiscord/plugins/MLV2_IMAGE_CACHE/*
+        $HOME/.cache/vim/swp/*\
+        $HOME/.cache/vim/undo/*
 }
 own(){ #External drive makes everything read only and owned by root, so we reown dat shit!
     [[ $2 == "\*" ]] && {
-    sudo chmod $1 *
-    sudo chown $USER *
-    sudo chgrp $USER *
+    sudo chmod $1 "*"
+    sudo chown $USER "*"
+    sudo chgrp $USER "*"
 }||{
     sudo chmod $1 $2
     sudo chown $USER $2

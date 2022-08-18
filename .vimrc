@@ -52,6 +52,11 @@ if has('syntax') && has('eval')
   packadd! matchit
 endif
 
+set backupdir=backup/,$HOME/.cache/vim/backup/,tmp//
+set directory=swp/,$HOME/.cache/vim/swp/,tmp//
+set undodir=undo/,$HOME/.cache/vim/undo/,tmp//
+
+syntax on
 set number
 set expandtab
 set shiftwidth=4
