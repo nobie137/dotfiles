@@ -1,0 +1,32 @@
+{
+    "name": "Nobuntu",
+    "is_dark": true,
+    "colors": {
+        "accent-color": "#61cccc",
+        "accent": "#61cccc",
+        "primary-color": "#00ff91",
+        "warning-color": "#00ff91",
+        "alert": "#61ffff",
+
+        "sidebar-color": "#222222",
+        "roomlist-background-color": "#313131",
+        "roomlist-text-color": "#61cccc",
+        "roomlist-text-secondary-color": "#00ff91",
+        "roomlist-highlights-color": "#222222",
+        "roomlist-separator-color": "#222222",
+
+        "timeline-background-color": "#1a1a1a",
+        "timeline-text-color": "#61cccc",
+        "secondary-content": "#61cccc",
+        "tertiary-content": "#61cccc",
+        "timeline-text-secondary-color": "#00ff91",
+        "timeline-highlights-color": "#3a3a3a",
+
+        "reaction-row-button-selected-bg-color": "#61aaaa",
+        "menu-selected-color": "#00ff91",
+        "focus-bg-color": "#222222",
+        "room-highlight-color": "#61aaaa",
+        "other-user-pill-bg-color": "#333333",
+        "togglesw-off-color": "#222222"
+    }
+}
