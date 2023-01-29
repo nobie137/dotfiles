@@ -1,8 +1,11 @@
 #Startx after tty login
 #[[ $(wmctrl -m | awk 'NR==1 {print $2}') != "dwm" ]] && startx
+#exec /usr/local/bin/swapwm-tty.sh
 
 [[ $- != *i* ]] && return
 
+#[[ $DISPLAY == "" ]] && echo "No display detected" || echo "Display exists" # Test stuff
+#[[ $DISPLAY == "" ]] && /home/nobie/.local/bin/swapwm-tty.sh
 usage() { #Taken from TFL's github.
 	du -h --max-depth=1 | sed -r '
 		$d; s/^([.0-9]+[KMGTPEZY]\t)\.\//\1/
@@ -17,9 +20,14 @@ cleanse(){ #Do not allow the glowing ones to know.
         $HOME/.config/discord/Cache/*_s\
         $HOME/.config/discord/.org.chromium.Chromium.*\
         $HOME/.config/BetterDiscord/plugins/MLV2_IMAGE_CACHE/*\
-        $HOME/.cache/vim/backup/*\
-        $HOME/.cache/vim/swp/*\
-        $HOME/.cache/vim/undo/*
+        $HOME/.cache/vim/backup/*.*\
+        $HOME/.cache/vim/swp/*.*\
+        $HOME/.cache/vim/undo/*.*\
+        $HOME/.cache/thumbnails/fail/*\
+        $HOME/.cache/thumbnails/large/*\
+        $HOME/.cache/sxiv/*\
+        $HOME/.thumbnails/normal/*\
+        $HOME/.stremio-server/stremio-cache/*/*
 }
 own(){ #External drive makes everything read only and owned by root, so we reown dat shit!
     [[ $2 == "\*" ]] && {
@@ -32,6 +40,9 @@ own(){ #External drive makes everything read only and owned by root, so we reown
     sudo chgrp $USER $2
 }
 }
+3gpcurse(){ # Convert shit to 3gp instantly
+       ffmpeg -i $1 -r 20 -s 352x288 -vb 400k -acodec aac -strict experimental -ac 1 -ar 8000 -ab 24k $2.3gp
+}
 trash(){ #Use when in doubt.
     dir="$HOME/.trash"
     [[ ! $1 ]] && echo "Trash command for trashing files." ||{
@@ -40,10 +51,11 @@ trash(){ #Use when in doubt.
     }
 }
 ffcord(){ #Opening OBS takes too much effort
-     ffmpeg -video_size 1920x1080 -framerate 40 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i 2 "$HOME/Videos/screenRecordings/$(date +"%Y-%m-%d %H:%M:%S").mp4"
+     ffmpeg -video_size 1920x1080 -framerate 40 -f x11grab -i :0.0+0,0 -f pulse -ac 2 -i 2 -b:v 430k "$HOME/Videos/screenRecordings/$(date +"%Y-%m-%d %H:%M:%S").mp4"
 }
 lsample(){ #EASY FUCKING SAMPLING BABY
-     ffmpeg -f pulse -ac 2 -i 2 "$HOME/Music/ModTracker/Samples/misc/$1.wav"
+     #ffmpeg -f alsa -ac 2 -i hw:0 "$HOME/Music/Samples/misc/$1.mp3"
+     fmpeg -f pulse -ac 2 -i 2 "$HOME/Music/Samples/misc/$1.wav"
 }
 rmex(){ #Obscure as fuck function for an obscure ass need.(It just replaces filename matches in bulk)
     for x in "$PWD"/*
@@ -134,7 +146,7 @@ complete -cf sudo
 shopt -s checkwinsize interactive_comments expand_aliases histappend
 set -o vi
 
-export PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:$HOME/.local/bin
+export PATH=$HOME/.local/bin:/bedrock/cross/pin/bin:/bedrock/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/games:/usr/games:/bedrock/cross/bin
 export XDG_RUNTIME_DIR=/tmp/runtime-nobie
 #Global colors
 
@@ -156,24 +168,42 @@ export yellow="\033[0;33m"
 
 alias rctard="clear && . ~/.bashrc"
 alias rm="rm -i"
-alias cls="clear"
-alias ls="ls -a --color"
-alias lsl="ls -ahl --color"
-alias strlen="expr length $1"
-alias xr="sudo xbps-remove"
-alias xu="sudo xbps-install -Syu"
-alias xq="xbps-query -Rs"
 alias cp="cp -i"
 alias df="df -h"
 alias free="free -h"
+alias cdd="cd .."
+alias cdl="cd $PWD/$1; ls"
+alias shred="shred -zvu -n 10"
+alias torch="shred -zvu -n 300"
+alias exstrip="exiftool -all:all= -overwrite_original"
+alias ident="identify -verbose"
+alias cls="clear"
+alias ls="ls -a --color"
+alias sl="ls -a --color"
+alias lsl="ls -ahl --color"
+alias strlen="expr length $1"
+alias arch="strat -r arch"
+alias void="strat -r void"
+alias xr="sudo xbps-remove"
+alias xu="sudo xbps-install -Syu"
+alias xq="xbps-query -Rs"
+alias pmr="sudo pmm -Rcs"
+alias pmu="sudo pmm -Syu"
+alias pmq="pmm -Ss"
+alias pmi="sudo pmm -S"
+alias pacr="sudo pacman -Rcs"
+alias pacu="sudo pacman -Syu"
+alias pacq="pacman -Q"
+alias paci="sudo pacman -S"
 alias scrot="scrot ~/Pictures/Scrot/Screenshot.jpeg"
 alias wttr="curl wttr.in/"
 alias ms-dlp="yt-dlp -x --audio-quality 10"
-alias ident="identify -verbose"
 alias grabc="grabc -rgb"
 alias hexedit="hexedit --color"
+alias bip="iptables -I INPUT -s $1 -j DROP"
 alias todo="cat ~/.todo"
 alias hear="mpv $1 --no-video"
+alias nightcore="mpv $1 --no-video -speed 1.4 --audio-pitch-correction=no"
 alias nn="firejail --net=none"
 alias a="cat $HOME/txt/Anime"
 alias ae="vim $HOME/txt/Anime"
@@ -185,7 +215,7 @@ alias de="vim $HOME/txt/DreamJournal.txt"
 alias vi="vim" # for some reason vi mode opened the edit in literally vi instead of how it used to do and open vim, lol.
 
 #Custom PS1
-export PS1="\[${Green}\]\u\e${Cyan}[\w]\e[m\]: \]"
+export PS1="\[${Green}\]\u${Cyan}[\w]\e[m\]: \]"
 export LESS="--RAW-CONTROL-CHARS"
 [[ -f ~/.LESS_TERMCAP ]] && . ~/.LESS_TERMCAP
 
