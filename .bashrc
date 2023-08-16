@@ -11,11 +11,15 @@ usage() { #Taken from TFL's github.
 		$d; s/^([.0-9]+[KMGTPEZY]\t)\.\//\1/
 	' | sort -hr | column
 }
+cdl(){ # cd; ls doesn't work so it has to be a function...
+    cd $PWD/$1
+    ls -a --color
+}
 cleanse(){ #Do not allow the glowing ones to know.
     history -c
     echo "" > "$HOME/.bash_history"
     echo "" > "$HOME/.python_history"
-    echo "" > "$HOME/.config/BetterDiscord/plugins/MessageLoggerV2Data.json"
+    #echo "" > "$HOME/.config/BetterDiscord/plugins/MessageLoggerV2Data.json"
     rm -rf $HOME/.config/discord/Cache/*_0\
         $HOME/.config/discord/Cache/*_s\
         $HOME/.config/discord/.org.chromium.Chromium.*\
@@ -23,9 +27,11 @@ cleanse(){ #Do not allow the glowing ones to know.
         $HOME/.cache/vim/backup/*.*\
         $HOME/.cache/vim/swp/*.*\
         $HOME/.cache/vim/undo/*.*\
+        HOME/.local/state/nvim/swap/*\
         $HOME/.cache/thumbnails/fail/*\
         $HOME/.cache/thumbnails/large/*\
         $HOME/.cache/sxiv/*\
+        $HOME/.config/Element/Cache/Cache_Data/*_0\
         $HOME/.thumbnails/normal/*\
         $HOME/.stremio-server/stremio-cache/*/*
 }
@@ -55,7 +61,15 @@ ffcord(){ #Opening OBS takes too much effort
 }
 lsample(){ #EASY FUCKING SAMPLING BABY
      #ffmpeg -f alsa -ac 2 -i hw:0 "$HOME/Music/Samples/misc/$1.mp3"
-     fmpeg -f pulse -ac 2 -i 2 "$HOME/Music/Samples/misc/$1.wav"
+     ffmpeg -f pulse -ac 2 -i 2 "$HOME/Music/Samples/misc/$1.mp3"
+}
+starts(){
+    qbittorrent&
+    soulseekqt&
+    cd ~/Downloads/i2pdbrowser/i2pd
+    ./i2pd
+    cd ~/Code/Python/JH
+    flask run
 }
 rmex(){ #Obscure as fuck function for an obscure ass need.(It just replaces filename matches in bulk)
     for x in "$PWD"/*
@@ -172,7 +186,6 @@ alias cp="cp -i"
 alias df="df -h"
 alias free="free -h"
 alias cdd="cd .."
-alias cdl="cd $PWD/$1; ls"
 alias shred="shred -zvu -n 10"
 alias torch="shred -zvu -n 300"
 alias exstrip="exiftool -all:all= -overwrite_original"
@@ -184,6 +197,7 @@ alias lsl="ls -ahl --color"
 alias strlen="expr length $1"
 alias arch="strat -r arch"
 alias void="strat -r void"
+alias debian="strat -r debian"
 alias xr="sudo xbps-remove"
 alias xu="sudo xbps-install -Syu"
 alias xq="xbps-query -Rs"
@@ -196,6 +210,7 @@ alias pacu="sudo pacman -Syu"
 alias pacq="pacman -Q"
 alias paci="sudo pacman -S"
 alias scrot="scrot ~/Pictures/Scrot/Screenshot.jpeg"
+alias freewipe="dd if=/dev/urandom of=$HOME/wipe; rm -rf $HOME/wipe"
 alias wttr="curl wttr.in/"
 alias ms-dlp="yt-dlp -x --audio-quality 10"
 alias grabc="grabc -rgb"
@@ -211,13 +226,22 @@ alias m="cat $HOME/txt/Manga"
 alias me="vim $HOME/txt/Manga"
 alias d="cat $HOME/txt/DreamJournal.txt"
 alias de="vim $HOME/txt/DreamJournal.txt"
+alias lnas="ssh admin@192.168.0.137"
 
+alias vim="nvim"
 alias vi="vim" # for some reason vi mode opened the edit in literally vi instead of how it used to do and open vim, lol.
 
 #Custom PS1
 export PS1="\[${Green}\]\u${Cyan}[\w]\e[m\]: \]"
 export LESS="--RAW-CONTROL-CHARS"
+export EDITOR="nvim"
 [[ -f ~/.LESS_TERMCAP ]] && . ~/.LESS_TERMCAP
 
 #neofetch; cat ~/.todo | lolcat
 #festival --tts ~/txt/welcome_message
+
+PATH="/home/nobie/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/nobie/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/nobie/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/nobie/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/nobie/perl5"; export PERL_MM_OPT;
