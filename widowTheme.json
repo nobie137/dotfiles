@@ -1,0 +1,32 @@
+{
+    "name": "Widow",
+    "is_dark": true,
+    "colors": {
+        "accent-color": "#f1f1f1",
+        "accent": "#f2f2f2",
+        "primary-color": "#d1d1d1",
+        "warning-color": "#d1d1d1",
+        "alert": "#f1f1f1f1",
+
+        "sidebar-color": "#111111",
+        "roomlist-background-color": "#222222",
+        "roomlist-text-color": "#f1f1f1",
+        "roomlist-text-secondary-color": "#d1d1d1",
+        "roomlist-highlights-color": "#222222",
+        "roomlist-separator-color": "#222222",
+
+        "timeline-background-color": "#111111",
+        "timeline-text-color": "#f1f1f1",
+        "secondary-content": "#f1f1f1",
+        "tertiary-content": "#f1f1f1",
+        "timeline-text-secondary-color": "#d1d1d1",
+        "timeline-highlights-color": "#2a2a2a",
+
+        "reaction-row-button-selected-bg-color": "#a1a1a1",
+        "menu-selected-color": "#d1d1d1",
+        "focus-bg-color": "#111111",
+        "room-highlight-color": "#a1a1a1",
+        "other-user-pill-bg-color": "#222222",
+        "togglesw-off-color": "#111111"
+    }
+}
