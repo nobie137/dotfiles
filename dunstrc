@@ -1,0 +1,26 @@
+[global]
+	font = CozetteVector
+	geometry = "324x8-8+31"
+	padding = 6
+	horizontal_padding = 6
+	frame_width = 5
+	frame_color = "#364a2e"
+	separator_color = "#364a2e"
+	separator_height = 5
+	vertical_alignment = top
+[shortcuts]
+	close_all = mod4+space
+[urgency_low]
+	background = "#a5a59c"
+	foreground = "#22241c"
+	timeout = 5
+
+[urgency_normal]
+	background = "#a5a59c"
+	foreground = "#22241c"
+	timeout = 5
+
+[urgency_critical]
+	background = "#a5a59c"
+	foreground = "#22241c"
+	timeout = 5
